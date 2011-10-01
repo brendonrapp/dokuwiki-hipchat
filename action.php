@@ -36,7 +36,7 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
     }
 
     private function handle() {
-		//global $ID;
+		//global $ID;//prefer $INFO['id']
     	//global $DATE;
     	//global $PRE;
     	//global $TEXT;
@@ -51,21 +51,17 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
 		$summary = $SUM;
 		$minor = (boolean) $_REQUEST['minor'];
 					
-		//say: {page} was updated by {user}. <em>$SUM</em> It was ($_REQUEST['minor']?'':'not ')a minor edit.
-		//saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
 		
 		//See conf/default.php for credentials
 		$config = $this->getConf('hipchat');
 		Hippy::config($config);
 		
-// 		Hippy::config(array(
-// 		    'token'  => 'your_token',
-// 		    'room'   => 'your_room',
-// 		    'from'   => 'your_name',
-// 		    'notify' => true          //(Optional) - whether to notify users of message
-// 		));
-
-		Hippy::speak('Hello from rcrowe', array('notify' => $minor));
+		//saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
+		$say = '<b>' .$fullname . '</b> updated the Wikipage <b>' . $page . '</b></br>';
+		if($minor)$say += '[minor edit]';
+		$say += '<em>' . $summary . '</em>';
+		
+		Hippy::speak($say, array('notify' => $minor));
     }
 }
 
