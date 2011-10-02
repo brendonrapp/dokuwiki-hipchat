@@ -19,7 +19,7 @@ if (!defined('DOKU_LF')) define('DOKU_LF', "\n");
 if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
 if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
-require_once DOKU_PLUGIN.'hippy.php';
+require_once 'lib/hippy/Hippy.php';
 require_once DOKU_PLUGIN.'action.php';
 
 class action_plugin_hipchat extends DokuWiki_Action_Plugin {
@@ -47,18 +47,21 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
 		
 		$fullname = $INFO['userinfo']['name'];
 		$username = $INFO['client'];
-		$page =  $INFO['namespace'] . $INFO['id'];
-		$summary = $SUM;
-		$minor = (boolean) $_REQUEST['minor'];
+		$page     = $INFO['namespace'] . $INFO['id'];
+		$summary  = $SUM;
+		$minor    = (boolean) $_REQUEST['minor'];
 					
 		
 		//See conf/default.php for credentials
-		$config = $this->getConf('hipchat');
+        $config = array( 
+            'token' => $this->getConf('hipchat_token'),
+            'room'  => $this->getConf('hipchat_room'),
+            'from'  => $this->getConf('hipchat_name'));
 		Hippy::config($config);
 		
 		//saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
-		$say = '<b>' .$fullname . '</b> updated the Wikipage <b>' . $page . '</b></br>';
-		if($minor)$say += '[minor edit]';
+		$say = '<b>' . $fullname . '</b> updated the Wikipage <b>' . $page . '</b></br>';
+		if ($minor) $say += '[minor edit]';
 		$say += '<em>' . $summary . '</em>';
 		
 		Hippy::speak($say, array('notify' => $minor));

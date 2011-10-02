@@ -5,9 +5,6 @@
  * @author Jeremy Ebler <jebler@gmail.com>
  */
 
-//Passed directly to Hippy::config()
-$conf['hipchat'] = array(
-    'token'  => 'your_token',
-    'room'   => 'your_room',
-    'from'   => 'your_name'
-);
+  $conf['hipchat_token'] = "<token>";
+  $conf['hipchat_room']  = "<room-name>";
+  $conf['hipchat_name']  = "Wiki";

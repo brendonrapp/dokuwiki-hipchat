@@ -1,5 +1,6 @@
-DokuWiki-Hipchat
-=====
+# DokuWiki-Hipchat
+
+Authors: [Jeremy Eblar](http://www.github.com/jeblar), [Brendon Rapp](http://www.github.com/LegionSB)
 
 A DokuWiki plugin that notifies a HipChat room of wiki edits.
 

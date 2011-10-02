@@ -1,0 +1,3 @@
+[submodule "lib/hippy"]
+	path = lib/hippy
+	url = https://github.com/rcrowe/Hippy
