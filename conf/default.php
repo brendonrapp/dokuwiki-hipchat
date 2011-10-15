@@ -5,6 +5,8 @@
  * @author Jeremy Ebler <jebler@gmail.com>
  */
 
-  $conf['hipchat_token'] = "<token>";
-  $conf['hipchat_room']  = "<room-name>";
-  $conf['hipchat_name']  = "Wiki";
+  $conf['hipchat_token']      = "<token>";
+  $conf['hipchat_room']       = "<room-name>";
+  $conf['hipchat_name']       = "Wiki";
+  $conf['hipchat_namespaces'] = "";
+  $conf['hipchat_suppress']   = "1";

@@ -9,3 +9,4 @@
   $meta['hipchat_room']       = array('string');
   $meta['hipchat_name']       = array('string');
   $meta['hipchat_namespaces'] = array('string');
+  $meta['hipchat_suppress']   = array('onoff');

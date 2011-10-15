@@ -54,7 +54,7 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
                 'from'       => $this->getConf('hipchat_name'));
 		Hippy::config($config);
 		
-        /* Namespace filter */
+        /* Option: Namespace filter */
         $ns = $this->getConf('hipchat_namespaces');
         if (!empty($ns)) {
             $namespaces = explode(',', $ns);
@@ -62,6 +62,11 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
             if (!in_array($current_namespace[0], $namespaces)) {
                 return;
             }
+        }
+        
+        /* Option: suppress notifications of minor edits */
+        if ($this->getConf('hipchat_suppress')) {
+            if ($minor) return;
         }
 
         $say = '<b>' . $fullname . '</b> updated the Wikipage <b><a href="' . $this->urlize() . '">' . $INFO['id'] . '</a></b>';
@@ -99,4 +104,4 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
     }
 }
 
-// vim:ts=4:sw=4:et:enc=utf-8:
+// vim:ts=4:sw=4:et:
