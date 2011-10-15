@@ -3,5 +3,5 @@ author Jaguar Design Studio
 email  itadmin@jaguardesignstudio.com
 date   2011-09-29
 name   HipChat plugin
-desc   Notify a hipchat room on page saves
+desc   Notify a HipChat room on page saves
 url    http://www.github.com/jaguardesign/dokuwiki-hipchat/

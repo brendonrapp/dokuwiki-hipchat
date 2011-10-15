@@ -4,21 +4,25 @@ Authors: [Jeremy Eblar](http://www.github.com/jeblar), [Brendon Rapp](http://www
 
 A DokuWiki plugin that notifies a HipChat room of wiki edits.
 
-_this commit is untested_
-
 Setup
 -----
 
-The project folder needs to be renamed 'hipchat' and placed in your DokuWiki plugins folder. For example, the path from the DokuWiki root to the action.php should be as follows:
+1. Clone repository into your DokuWiku plugins folder, making the target folder name 'hipchat'
 
-DOKUWIKI_ROOT/plugins/hipchat/action.php
+```
+$ git clone https://github.com/jaguardesign/dokuwiki-hipchat.git hipchat
+```
 
-Enter your HipChat token, target room, and prefered username in 'conf/default.php'
+2. To fetch the required dependencies, run:
 
-Congratulatuons! Edit a wikipage, and try it out.
+```
+$ git submodule init
+$ git submodule update
+```
 
-Included is some javascript that enforces summarys. If this not desired or your Doku Wiki setup already includes summary enforcement, delete 'conf/userscript.js'
-http://www.dokuwiki.org/tips:summary_enforcement
+3. In your DokuWiki Configuration Settings, enter an API token, room name (or ID number), and the name you want the notifications to appear from in HipChat. 
+
+4. Optionally, you can also define a comma-separated list of first-level namespaces to limit notifications to only those namespaces (without this setting, all namespaces will trigger notifications)
 
 Requirements
 ------------
