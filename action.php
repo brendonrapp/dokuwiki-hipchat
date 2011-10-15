@@ -29,20 +29,17 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
     }
 
     function handle_action_act_preprocess(&$event, $param) {
-        if ($event->data !== 'save') {
-            return;
+
+        if (isset($event->data['save'])) {
+            if ($event->data['save'] == 'Save') {
+                $this->handle();
+            }
         }
-        $this->handle();
+        return;
     }
 
     private function handle() {
-		//global $ID;//prefer $INFO['id']
-    	//global $DATE;
-    	//global $PRE;
-    	//global $TEXT;
-		//global $SUF;
     	global $SUM;
-		//global $lang;
 		global $INFO;
 		
 		$fullname = $INFO['userinfo']['name'];
@@ -50,21 +47,45 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
 		$page     = $INFO['namespace'] . $INFO['id'];
 		$summary  = $SUM;
 		$minor    = (boolean) $_REQUEST['minor'];
-					
 		
-		//See conf/default.php for credentials
         $config = array( 
             'token' => $this->getConf('hipchat_token'),
             'room'  => $this->getConf('hipchat_room'),
             'from'  => $this->getConf('hipchat_name'));
 		Hippy::config($config);
 		
-		//saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
-		$say = '<b>' . $fullname . '</b> updated the Wikipage <b>' . $page . '</b></br>';
-		if ($minor) $say += '[minor edit]';
-		$say += '<em>' . $summary . '</em>';
+        $say = '<b>' . $fullname . '</b> updated the Wikipage <b><a href="' . $this->urlize() . '">' . $INFO['id'] . '</a></b>';
+		// if ($minor) $say += '[minor edit]';
+		// $say += '<em>' . $summary . '</em>';
 		
 		Hippy::speak($say, array('notify' => $minor));
+    }
+
+    /* Make our URLs! */
+    private function urlize() {
+
+        global $INFO;
+        global $conf;
+        $page = $INFO['id'];
+
+        switch($conf['userewrite']) {
+            case 0:
+                $url = DOKU_URL . "doku.php?id=" . $page;
+                break;
+            case 1:
+                if ($conf['useslash']) {
+                    $page = str_replace(":", "/", $page);
+                }
+                $url = DOKU_URL . $page;
+                break;
+            case 2:
+                if ($conf['useslash']) {
+                    $page = str_replace(":", "/", $page);
+                }
+                $url = DOKU_URL . "doku.php/" . $page;
+                break;
+        }
+        return $url;
     }
 }
 
