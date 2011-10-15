@@ -49,14 +49,24 @@ class action_plugin_hipchat extends DokuWiki_Action_Plugin {
 		$minor    = (boolean) $_REQUEST['minor'];
 		
         $config = array( 
-            'token' => $this->getConf('hipchat_token'),
-            'room'  => $this->getConf('hipchat_room'),
-            'from'  => $this->getConf('hipchat_name'));
+                'token'      => $this->getConf('hipchat_token'),
+                'room'       => $this->getConf('hipchat_room'),
+                'from'       => $this->getConf('hipchat_name'));
 		Hippy::config($config);
 		
+        /* Namespace filter */
+        $ns = $this->getConf('hipchat_namespaces');
+        if (!empty($ns)) {
+            $namespaces = explode(',', $ns);
+            $current_namespace = explode(':', $INFO['namespace']);
+            if (!in_array($current_namespace[0], $namespaces)) {
+                return;
+            }
+        }
+
         $say = '<b>' . $fullname . '</b> updated the Wikipage <b><a href="' . $this->urlize() . '">' . $INFO['id'] . '</a></b>';
-		// if ($minor) $say += '[minor edit]';
-		// $say += '<em>' . $summary . '</em>';
+		if ($minor) $say = $say . ' [minor edit]';
+        if ($summary) $say = $say . '<br /><em>' . $summary . '</em>';
 		
 		Hippy::speak($say, array('notify' => $minor));
     }

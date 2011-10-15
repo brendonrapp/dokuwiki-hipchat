@@ -5,7 +5,7 @@
  * @author Brendon Rapp <brendon@jaguardesignstudio.com>
  */
 
-  /* TODO:  Add namespace filtering */
-  $meta['hipchat_token'] = array('string');
-  $meta['hipchat_room']  = array('string');
-  $meta['hipchat_name']  = array('string');
+  $meta['hipchat_token']      = array('string');
+  $meta['hipchat_room']       = array('string');
+  $meta['hipchat_name']       = array('string');
+  $meta['hipchat_namespaces'] = array('string');
